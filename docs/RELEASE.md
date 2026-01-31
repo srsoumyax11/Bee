@@ -9,7 +9,7 @@ The workflow automatically builds and releases Just-Share for multiple platforms
 ### Supported Platforms and Architectures
 
 - **Windows**: AMD64, ARM64
-- **macOS**: AMD64 (Intel), ARM64 (Apple Silicon)
+- **macOS**: AMD64 (Intel), ARM64 (Apple Silicon)  
 - **Linux**: AMD64, ARM64, 386
 
 ## 📦 Creating a Release
@@ -44,39 +44,36 @@ git push origin v1.0.0
 - The workflow will:
   - Build the frontend (React/Vite)
   - Build the Go backend for all platforms and architectures
-  - Create distribution archives (.tar.gz for Unix, .zip for Windows)
+  - Create standalone executables with version numbers in filenames
   - Create a GitHub Release with all the binaries
 
 ### 4. Release Assets
 
-Once complete, your release will include:
+Once complete, your release will include standalone executables:
 
-- `justshare-windows-amd64.zip` - Windows 64-bit (Intel/AMD)
-- `justshare-windows-arm64.zip` - Windows ARM64
-- `justshare-macos-amd64.tar.gz` - macOS Intel
-- `justshare-macos-arm64.tar.gz` - macOS Apple Silicon
-- `justshare-linux-amd64.tar.gz` - Linux 64-bit
-- `justshare-linux-arm64.tar.gz` - Linux ARM64
-- `justshare-linux-386.tar.gz` - Linux 32-bit
+- `justshare-v1.0.0-windows-amd64.exe` - Windows 64-bit (Intel/AMD)
+- `justshare-v1.0.0-windows-arm64.exe` - Windows ARM64
+- `justshare-v1.0.0-macos-amd64` - macOS Intel
+- `justshare-v1.0.0-macos-arm64` - macOS Apple Silicon
+- `justshare-v1.0.0-linux-amd64` - Linux 64-bit
+- `justshare-v1.0.0-linux-arm64` - Linux ARM64
+- `justshare-v1.0.0-linux-386` - Linux 32-bit
 
-Each archive contains:
-- The compiled binary (`justshare` or `justshare.exe`)
-- The frontend build (`frontend/` directory)
-- README.md
+**Note**: Each binary requires the `frontend/dist` folder to be in the same directory as the executable to serve the web interface.
 
 ## 🔧 Workflow Details
 
 ### Build Process
 
 1. **Frontend Build**: Builds the React app using Vite (`npm run build`)
-2. **Backend Build**: Compiles the Go binary for each platform/architecture
-3. **Archive Creation**: Packages everything into distribution archives
-4. **Release Creation**: Creates a GitHub release with all archives attached
+2. **Backend Build**: Compiles the Go binary for each platform/architecture with version info
+3. **Release Creation**: Creates a GitHub release with all executables
 
 ### Build Optimizations
 
 - **CGO_ENABLED=0**: Ensures fully static binaries (no external dependencies)
 - **-ldflags="-s -w"**: Reduces binary size by stripping debug info
+- **-X main.version=...**: Embeds version information into the binary
 
 ## 📝 Version Tag Examples
 
@@ -94,7 +91,38 @@ git tag v1.1.1 && git push origin v1.1.1
 git tag v2.0.0-beta.1 && git push origin v2.0.0-beta.1
 ```
 
-## 🛠️ Troubleshooting
+## 🛠️ Local Build Testing
+
+To test building for different platforms locally:
+
+### Windows (PowerShell)
+```powershell
+# Build for Windows
+$env:GOOS="windows"; $env:GOARCH="amd64"; go build -ldflags="-s -w" -o justshare-windows-amd64.exe .
+
+# Build for Linux
+$env:GOOS="linux"; $env:GOARCH="amd64"; go build -ldflags="-s -w" -o justshare-linux-amd64 .
+
+# Build for macOS (Intel)
+$env:GOOS="darwin"; $env:GOARCH="amd64"; go build -ldflags="-s -w" -o justshare-macos-amd64 .
+
+# Build for macOS (Apple Silicon)
+$env:GOOS="darwin"; $env:GOARCH="arm64"; go build -ldflags="-s -w" -o justshare-macos-arm64 .
+```
+
+### Linux/macOS (Bash)
+```bash
+# Build for current platform
+go build -ldflags="-s -w" -o justshare .
+
+# Cross-compile for Windows
+GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o justshare.exe .
+
+# Cross-compile for Linux ARM64
+GOOS=linux GOARCH=arm64 go build -ldflags="-s -w" -o justshare-linux-arm64 .
+```
+
+## 🐛 Troubleshooting
 
 ### Workflow Fails
 
@@ -114,22 +142,9 @@ git tag -d v1.0.0
 
 # Delete remote tag
 git push origin :refs/tags/v1.0.0
-```
 
-### Testing Before Release
-
-To test the build process locally:
-
-```bash
-# Build frontend
-cd frontend
-npm install
-npm run build
-
-# Build for different platforms
-GOOS=windows GOARCH=amd64 go build -ldflags="-s -w" -o justshare.exe .
-GOOS=darwin GOARCH=arm64 go build -ldflags="-s -w" -o justshare .
-GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o justshare .
+# Delete the release from GitHub UI
+# Go to Releases → Click on the release → Delete release
 ```
 
 ## 🔐 Permissions
@@ -144,3 +159,4 @@ These permissions are already configured in the workflow file.
 - [GitHub Actions Documentation](https://docs.github.com/en/actions)
 - [Semantic Versioning](https://semver.org/)
 - [Go Cross Compilation](https://go.dev/doc/install/source#environment)
+

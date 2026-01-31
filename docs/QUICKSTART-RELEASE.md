@@ -6,7 +6,7 @@ Follow these simple steps to create your first automated release:
 
 ```bash
 # Add the workflow files
-git add .github/workflows/release.yml docs/RELEASE.md
+git add .github/workflows/release.yml docs/
 
 # Commit
 git commit -m "feat: add automated build and release workflow"
@@ -35,25 +35,30 @@ git push origin v1.0.0
 ## 4️⃣ Check Your Release
 
 1. Go to the **Releases** section (right sidebar on your repo homepage)
-2. You'll see your new release with 7 distribution files:
-   - 2 Windows builds (.zip)
-   - 2 macOS builds (.tar.gz)
-   - 3 Linux builds (.tar.gz)
+2. You'll see your new release with 7 standalone executables:
+   - `justshare-v1.0.0-windows-amd64.exe`
+   - `justshare-v1.0.0-windows-arm64.exe`
+   - `justshare-v1.0.0-macos-amd64`
+   - `justshare-v1.0.0-macos-arm64`
+   - `justshare-v1.0.0-linux-amd64`
+   - `justshare-v1.0.0-linux-arm64`
+   - `justshare-v1.0.0-linux-386`
 
 ## 🎉 That's It!
 
-Your users can now download Just-Share for their platform directly from the Releases page.
+Your users can now download the appropriate executable for their platform directly from the Releases page.
 
 ---
 
-## What Gets Built
+## 📦 Distribution Note
 
-Each release archive contains:
-- ✅ Compiled binary (ready to run)
-- ✅ Frontend build (static files)
-- ✅ README.md
+Each executable requires the `frontend/dist` folder to be in the same directory to serve the web interface. Users should:
 
-## For Your Next Release
+1. Download the executable for their platform
+2. Ensure the `frontend/dist` folder is present in the same directory
+3. Run the executable
+
+## 🚀 For Your Next Release
 
 ```bash
 # Make your changes
@@ -67,3 +72,10 @@ git push origin v1.1.0
 ```
 
 **That's all!** The workflow handles everything else automatically.
+
+## 💡 Pro Tip
+
+The version number is automatically embedded in both:
+- The filename (e.g., `justshare-v1.0.0-windows-amd64.exe`)
+- The binary itself (via `-X main.version` ldflags)
+
