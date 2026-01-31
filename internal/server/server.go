@@ -20,9 +20,10 @@ import (
 )
 
 type Server struct {
-	Hub  *hub.Hub
-	Port string
-	Pin  string
+	Hub        *hub.Hub
+	Port       string
+	Pin        string
+	FrontendFS http.FileSystem // Optional embedded frontend filesystem
 }
 
 func NewServer(port, pin string) *Server {
@@ -116,10 +117,14 @@ func (s *Server) Start() {
 	})
 
 	// Serve Frontend
-	// Ideally this would be embedded, but for dev we serve dist or proxy
-	// For now, let's look for a "frontend/dist" folder
-	fs := http.FileServer(http.Dir("./frontend/dist"))
-	http.Handle("/", fs)
+	// Use embedded files if provided, otherwise serve from disk (development mode)
+	if s.FrontendFS != nil {
+		// Production: use embedded files
+		http.Handle("/", http.FileServer(s.FrontendFS))
+	} else {
+		// Development: serve from disk
+		http.Handle("/", http.FileServer(http.Dir("./frontend/dist")))
+	}
 
 	ip := getLocalIP()
 

@@ -35,7 +35,7 @@ git push origin v1.0.0
 ## 4️⃣ Check Your Release
 
 1. Go to the **Releases** section (right sidebar on your repo homepage)
-2. You'll see your new release with 7 standalone executables:
+2. You'll see your new release with 7 **fully standalone executables**:
    - `justshare-v1.0.0-windows-amd64.exe`
    - `justshare-v1.0.0-windows-arm64.exe`
    - `justshare-v1.0.0-macos-amd64`
@@ -46,17 +46,11 @@ git push origin v1.0.0
 
 ## 🎉 That's It!
 
-Your users can now download the appropriate executable for their platform directly from the Releases page.
+Your users can now download and run the executable directly - **no installation, no dependencies, just download and run!**
+
+The frontend is embedded using Go's `embed` package, making each binary completely self-contained.
 
 ---
-
-## 📦 Distribution Note
-
-Each executable requires the `frontend/dist` folder to be in the same directory to serve the web interface. Users should:
-
-1. Download the executable for their platform
-2. Ensure the `frontend/dist` folder is present in the same directory
-3. Run the executable
 
 ## 🚀 For Your Next Release
 

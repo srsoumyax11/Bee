@@ -49,7 +49,7 @@ git push origin v1.0.0
 
 ### 4. Release Assets
 
-Once complete, your release will include standalone executables:
+Once complete, your release will include **fully standalone executables** with the frontend embedded:
 
 - `justshare-v1.0.0-windows-amd64.exe` - Windows 64-bit (Intel/AMD)
 - `justshare-v1.0.0-windows-arm64.exe` - Windows ARM64
@@ -59,7 +59,7 @@ Once complete, your release will include standalone executables:
 - `justshare-v1.0.0-linux-arm64` - Linux ARM64
 - `justshare-v1.0.0-linux-386` - Linux 32-bit
 
-**Note**: Each binary requires the `frontend/dist` folder to be in the same directory as the executable to serve the web interface.
+**✨ These are truly standalone binaries!** The frontend is embedded using Go's `embed` package, so users only need to download and run the executable - no additional files required.
 
 ## 🔧 Workflow Details
 

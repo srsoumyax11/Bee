@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"net/http"
 
 	"justshare/internal/server"
 )
@@ -18,5 +19,7 @@ func main() {
 	}
 
 	srv := server.NewServer(*port, *pin)
+	// Set embedded frontend filesystem
+	srv.FrontendFS = http.FS(GetFrontendFS())
 	srv.Start()
 }
