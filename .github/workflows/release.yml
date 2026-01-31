@@ -100,6 +100,7 @@ jobs:
           npm run build
 
       - name: Build standalone binary
+        id: build
         env:
           GOOS: ${{ matrix.goos }}
           GOARCH: ${{ matrix.goarch }}
@@ -108,13 +109,13 @@ jobs:
         run: |
           OUTPUT_NAME="justshare-${{ steps.version.outputs.VERSION }}-${{ matrix.os }}-${{ matrix.arch }}${{ matrix.extension }}"
           go build -ldflags="-s -w -X main.version=${{ steps.version.outputs.VERSION }}" -o "$OUTPUT_NAME" .
-          echo "BINARY_NAME=$OUTPUT_NAME" >> $GITHUB_ENV
+          echo "BINARY_NAME=$OUTPUT_NAME" >> $GITHUB_OUTPUT
 
       - name: Upload binary as artifact
         uses: actions/upload-artifact@v4
         with:
           name: justshare-${{ matrix.os }}-${{ matrix.arch }}
-          path: ${{ env.BINARY_NAME }}
+          path: ${{ steps.build.outputs.BINARY_NAME }}
           retention-days: 1
 
   release:
