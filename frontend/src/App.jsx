@@ -129,7 +129,7 @@ function App() {
     const device = getDeviceType();
 
     const wsUrl = process.env.NODE_ENV === 'development'
-      ? `ws://localhost:8081/ws?name=${encodeURIComponent(name)}&pin=${pin}&device=${device}`
+      ? `ws://localhost:1111/ws?name=${encodeURIComponent(name)}&pin=${pin}&device=${device}`
       : `${protocol}//${host}/ws?name=${encodeURIComponent(name)}&pin=${pin}&device=${device}`;
 
     const socket = new WebSocket(wsUrl);
@@ -175,7 +175,7 @@ function App() {
 
   const fetchFiles = async () => {
     try {
-      const port = process.env.NODE_ENV === 'development' ? 8081 : window.location.port;
+      const port = process.env.NODE_ENV === 'development' ? 1111 : window.location.port;
       const res = await fetch(`http://${window.location.hostname}:${port}/files`);
       if (res.ok) {
         const data = await res.json();
@@ -226,7 +226,7 @@ function App() {
   };
 
   const uploadFiles = async (selectedFiles) => {
-    const port = process.env.NODE_ENV === 'development' ? 8081 : window.location.port;
+    const port = process.env.NODE_ENV === 'development' ? 1111 : window.location.port;
     const url = `http://${window.location.hostname}:${port}/upload`;
 
     for (let i = 0; i < selectedFiles.length; i++) {
@@ -488,7 +488,7 @@ function App() {
                   </div>
                   <div className="file-size">{formatFileSize(f.size)}</div>
                   <a
-                    href={`http://${window.location.hostname}:${process.env.NODE_ENV === 'development' ? 8081 : window.location.port}/upload/${f.name}`}
+                    href={`http://${window.location.hostname}:${process.env.NODE_ENV === 'development' ? 1111 : window.location.port}/upload/${f.name}`}
                     download
                     className="btn-download"
                   >
@@ -504,7 +504,7 @@ function App() {
                   <span className="file-size">{formatFileSize(f.size)}</span>
                   <span className="file-date">{formatDate(f.time)}</span>
                   <a
-                    href={`http://${window.location.hostname}:${process.env.NODE_ENV === 'development' ? 8081 : window.location.port}/upload/${f.name}`}
+                    href={`http://${window.location.hostname}:${process.env.NODE_ENV === 'development' ? 1111 : window.location.port}/upload/${f.name}`}
                     download
                     className="btn-download-small"
                   >

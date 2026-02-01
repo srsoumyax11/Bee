@@ -15,7 +15,7 @@ var version = "dev"
 
 func main() {
 	fmt.Printf("Bee version: %s\n", version)
-	port := flag.String("port", "8080", "Port to run the server on")
+	port := flag.String("port", "1111", "Port to run the server on")
 	pin := flag.String("pin", "", "6-digit Access PIN (optional, generated if empty)")
 	flag.Parse()
 
