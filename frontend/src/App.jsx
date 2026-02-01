@@ -348,7 +348,7 @@ function App() {
           <button className="hamburger-btn" onClick={toggleSidebar}>
             ☰
           </button>
-          <h1 className="app-title">Just-Share</h1>
+          <h1 className="app-title">Bee</h1>
           <button className="mobile-upload-btn" onClick={handleUploadClick}>
             📤
           </button>
@@ -362,7 +362,7 @@ function App() {
       <aside className={`sidebar ${sidebarCollapsed ? 'collapsed' : 'expanded'} ${isMobile ? 'mobile' : ''}`}>
         {!isMobile && (
           <div className="sidebar-header">
-            {!sidebarCollapsed && <h2>Just-Share</h2>}
+            {!sidebarCollapsed && <h2>Bee</h2>}
             <button className="btn-icon" onClick={toggleSidebar} title={sidebarCollapsed ? 'Expand' : 'Collapse'}>
               {sidebarCollapsed ? '☰' : '×'}
             </button>
@@ -371,7 +371,7 @@ function App() {
 
         {isMobile && (
           <div className="sidebar-header mobile">
-            <h2>Just-Share</h2>
+            <h2>Bee</h2>
             <button className="btn-icon" onClick={toggleSidebar}>
               ×
             </button>

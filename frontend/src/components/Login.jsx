@@ -40,8 +40,8 @@ const Login = ({ onLogin, error: externalError }) => {
         <div className="login-container">
             <div className="login-card">
                 <div className="login-header">
-                    <div className="login-icon">📁</div>
-                    <h1>Just-Share</h1>
+                    <img src="/favicon.ico" alt="Bee Logo" className="login-logo" style={{ width: '64px', height: '64px', marginBottom: '10px' }} />
+                    <h1>Bee</h1>
                     <p>LAN File Sharing</p>
                 </div>
 

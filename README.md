@@ -1,6 +1,6 @@
 <div align="center">
 
-# 📁 Just-Share
+# 🐝 Bee
 
 ### ⚡ Lightning-Fast LAN File Sharing Made Simple
 
@@ -62,10 +62,10 @@
 
 ### 🪟 Windows
 
-1. **Download** the latest `just-share.exe` from [Releases](https://github.com/srsoumyax11/just-share/releases)
+1. **Download** the latest `bee.exe` from [Releases](https://github.com/srsoumyax11/bee/releases)
 2. **Run** the executable:
    ```cmd
-   just-share.exe
+   bee.exe
    ```
 3. **Open browser** at `http://localhost:8080`
 4. **Enter PIN**: `111111` (default)
@@ -75,8 +75,8 @@
 
 ```bash
 # Download and run
-chmod +x just-share
-./just-share -port 8080
+chmod +x bee
+./bee -port 8080
 
 # Open browser
 http://localhost:8080
@@ -138,7 +138,7 @@ http://localhost:8080
 ### 🔧 Project Structure
 
 ```
-just-share/
+bee/
 ├── main.go                 # Entry point
 ├── internal/
 │   ├── server/            # HTTP & WebSocket handlers
@@ -162,8 +162,8 @@ just-share/
 
 ```bash
 # 1. Clone the repository
-git clone https://github.com/srsoumyax11/just-share.git
-cd just-share
+git clone https://github.com/srsoumyax11/bee.git
+cd bee
 
 # 2. Install Go dependencies
 go mod download
@@ -174,7 +174,7 @@ npm install
 cd ..
 
 # 4. Run backend (Terminal 1)
-go run main.go -port 8081
+go run . -port 8081
 
 # 5. Run frontend dev server (Terminal 2)
 cd frontend
@@ -194,13 +194,13 @@ cd ..
 
 # 2. Build Go binary (with embedded frontend)
 # Option A: Current platform
-go build
+go build -o bee
 
 # Option B: Cross-compile for Windows
-GOOS=windows GOARCH=amd64 go build -o just-share.exe
+GOOS=windows GOARCH=amd64 go build -o bee.exe
 
 # Option C: Linux
-GOOS=linux GOARCH=amd64 go build -o just-share-linux
+GOOS=linux GOARCH=amd64 go build -o bee-linux
 ```
 
 To **embed the frontend** into the Go binary, use `embed` in `main.go`:
@@ -364,7 +364,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fi
 - **Gorilla WebSocket** — Reliable WebSocket library
 - **Vite** — Lightning-fast frontend tooling
 - **React** — UI component library
-- **You!** — For using Just-Share 💛
+- **You!** — For using Bee 💛
 
 ---
 
@@ -374,6 +374,6 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fi
 
 **Made with 💛 by [Your Name](https://github.com/srsoumyax11)**
 
-[Report Bug](https://github.com/srsoumyax11/just-share/issues) • [Request Feature](https://github.com/srsoumyax11/just-share/issues)
+[Report Bug](https://github.com/srsoumyax11/bee/issues) • [Request Feature](https://github.com/srsoumyax11/bee/issues)
 
 </div>

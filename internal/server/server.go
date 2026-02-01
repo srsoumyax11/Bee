@@ -129,7 +129,7 @@ func (s *Server) Start() {
 	ip := getLocalIP()
 
 	fmt.Println("\n=================================================")
-	fmt.Println("   JUST-SHARE: LAN File Sharing")
+	fmt.Println("   Bee: LAN File Sharing")
 	fmt.Println("=================================================")
 	fmt.Printf(" Server running at: http://%s:%s\n", ip, s.Port)
 	fmt.Printf(" Access PIN:        %s\n", s.Pin)

@@ -2,12 +2,12 @@
 
 ## 🎯 How It Works
 
-Just-Share now uses **Go's embed package** to create truly standalone executables. The frontend is embedded directly into the binary at compile time.
+Bee now uses **Go's embed package** to create truly standalone executables. The frontend is embedded directly into the binary at compile time.
 
 ## 📁 File Structure
 
 ```
-Just-Share/
+Bee/
 ├── main.go                    # Entry point, injects embedded frontend
 ├── embed.go                   # Handles frontend embedding
 ├── internal/

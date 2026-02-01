@@ -1,10 +1,10 @@
 # Release Workflow Guide
 
-This document explains how to use the automated build and release workflow for Just-Share.
+This document explains how to use the automated build and release workflow for Bee.
 
 ## 🚀 How It Works
 
-The workflow automatically builds and releases Just-Share for multiple platforms when you push a new version tag to GitHub.
+The workflow automatically builds and releases Bee for multiple platforms when you push a new version tag to GitHub.
 
 ### Supported Platforms and Architectures
 
