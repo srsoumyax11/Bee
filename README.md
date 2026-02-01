@@ -19,10 +19,10 @@
 ## 🚀 The Problem & The Solution
 
 **The Problem:**  
-Sharing files between your phone and laptop (or between friends) usually means emailing yourself, dealing with slow Bluetooth, or uploading to the cloud—which requires Internet and eats up your data.
+Sharing files between your phone and laptop usually means emailing yourself, dealing with slow Bluetooth, or uploading to the cloud—which requires Internet and eats up your data.
 
 **The Solution:**  
-**Bee** creates a high-speed tunnel between your devices over your own Wi-Fi. No Internet required. No cables. No setup. Just run Bee, and your device becomes a secure file-sharing hub.
+**Bee** creates a high-speed tunnel between your devices over your own Wi-Fi. No Internet required. No cables. Just run Bee, and your device becomes a secure file-sharing hub.
 
 ---
 
@@ -30,74 +30,71 @@ Sharing files between your phone and laptop (or between friends) usually means e
 
 - **⚡ Blazing Fast**: Transfers happen over LAN. Gigabit speeds are common.
 - **🔒 Private & Secure**: Files never leave your local network. No cloud, no tracking.
-- **📱 Works Everywhere**: If it has a browser, it works. PC, Mac, Android, iPhone, Tablet.
-- **💾 No Limits**: Share files of any size. 10GB movie? Done in seconds.
-- **🌐 Offline Capable**: Works perfectly without an active Internet connection.
+- **📱 Works Everywhere**: If it has a browser, it works. PC, Mac, Android, iOS.
+- **🌐 Offline Capable**: Works perfectly without an Internet connection.
 
 ---
 
-## 📥 For Users: How to Download & Run
+## 📥 Quick Start
 
-1.  **Download**: Go to the [Releases Page](https://github.com/srsoumyax11/bee/releases) and download the file for your OS:
-    *   🪟 Windows: `bee.exe` (or `bee-windows-amd64.exe`)
-    *   🐧 Linux: `bee-linux-amd64`
-    *   🍎 macOS: `bee-darwin-amd64`
-
-2.  **Run**: Double-click the file (or run from terminal).
-    *   *Note: On Windows, you might need to "Run anyway" if SmartScreen pops up (since this is a community app).*
-    *   *On Linux/Mac:* `chmod +x bee && ./bee`
-
+1.  **Download**: Get the latest `bee` executable for your OS from **[Releases](https://github.com/srsoumyax11/bee/releases)**.
+2.  **Run**: Double-click `bee.exe` (Windows) or run `./bee` (Linux/Mac) in your terminal.
 3.  **Connect**:
-    *   Open your browser to `http://localhost:1111`.
+    *   Open `http://localhost:1111` on your computer.
     *   Share the displayed **Local IP URL** (e.g., `http://192.168.1.5:1111`) with others on your Wi-Fi.
-    *   Enter the PIN shown in the terminal (Default: `111111`).
+    *   Enter the PIN: **111111** (default).
 
 ---
 
-## 🧩 How It Works
+## 🧩 How It Works & Storage
 
 Bee acts as a **Local Web Server** on your device.
 
-1.  **Server (You)**: When you run `bee.exe`, it starts a tiny web server on port `1111` and creates a secure WebSocket tunnel.
-2.  **Clients (Others)**: When other devices (phones, laptops) connect to your IP, they load the Bee interface directly from your computer.
-3.  **Transfer**: Files are streamed directly from device to device over your Wi-Fi, never touching the internet or any cloud server.
+1.  **Storage**: When you run Bee, it creates an **`uploads`** folder in the same directory as the executable.
+
+> [!WARNING]
+> **⚠️ Important Storage Notice**
+> 
+> The device running Bee acts as the **central storage**.
+> *   **Persistent**: All uploaded files are saved to the `uploads` folder on this computer.
+> *   **Access**: Even if a user uploads a file and disconnects, the file **remains on the server** and can be downloaded by anyone else with the PIN.
+> *   **Privacy**: Share the PIN (`111111`) only with trusted people on your network.
 
 ---
 
-## � Future Roadmap
+## ✅ Features & Roadmap
 
-We have big plans for Bee! Here's what's coming next:
+Here is what Bee can do now, and what's coming soon.
 
-- [ ] **Folder Uploads** — Drag and drop entire folders
-- [ ] **Batch Actions** — Select and download multiple files
-- [ ] **Dark/Light Mode** — Customizable themes
-- [ ] **QR Code Connect** — Scan to join instant
-- [ ] **Clipboard Sharing** — Copy on PC, paste on Phone
-- [ ] **Password Protection** — Set custom PINs per session
-- [ ] **Resume Uploads** — Pause and continue large transfers
+- [x] **⚡ Zero Config** — Just run and share
+- [x] **🔒 PIN Security** — Simple 6-digit access control
+- [x] **📤 Drag & Drop** — Intuitive file uploads
+- [x] **💻 Multi-Device** — Desktop, tablet, mobile support
+- [x] **👥 Live Presence** — See who's online in real-time
+- [x] **⚙️ Cancelable Uploads** — Stop transfers mid-way
+- [ ] **🚀 Speed Improvements** — Optimize for Gigabit performance
+- [ ] **💬 Public Chat Area** — Text chat for connected users
+- [ ] **📂 Folder Uploads** — Drag and drop entire folders
+- [ ] **📦 Batch Actions** — Select and download multiple files
+- [ ] **🌑 Dark/Light Mode** — Customizable themes
+- [ ] **📱 QR Code Connect** — Scan to join instantly
+- [ ] **📋 Clipboard Sharing** — Copy on PC, paste on Phone
+- [ ] **🔐 Custom Passwords** — Set unique PINs per session
 
 ---
 
-## �📸 Screenshots & Demos
-
-<!-- 
-PLACEHOLDER FOR GALLERY
-Add your screenshots or GIFs here showing:
-1. The Login Screen
-2. Grid View of files
-3. Mobile Uploading in action
--->
+## 📸 Screenshots
 
 <div align="center">
   <table>
     <tr>
       <td align="center">
         <b>Desktop View</b><br>
-        <img src="https://placehold.co/600x400/222/FFD700?text=Desktop+Grid+View" alt="Desktop Screenshot" />
+        <img src="https://placehold.co/600x400/222/FFD700?text=Desktop-Grid-View" alt="Desktop Screenshot" />
       </td>
       <td align="center">
         <b>Mobile View</b><br>
-        <img src="https://placehold.co/300x600/222/FFD700?text=Mobile+Experience" alt="Mobile Screenshot" />
+        <img src="https://placehold.co/300x600/222/FFD700?text=Mobile-Experience" alt="Mobile Screenshot" />
       </td>
     </tr>
   </table>
@@ -105,52 +102,43 @@ Add your screenshots or GIFs here showing:
 
 ---
 
-## 🛠️ For Developers: Contribute to Bee
+## 🛠️ Developer Guide
 
-We love contributions! Whether you're fixing a bug or adding a cool new feature, here's how to get started.
+Want to build Bee from source?
 
 ### 1️⃣ Clone & Setup
 
 ```bash
-# Clone the repository
 git clone https://github.com/srsoumyax11/bee.git
 cd bee
-
-# Install Go dependencies
 go mod download
 ```
 
-### 2️⃣ Development Workflow
+### 2️⃣ Development (Hot Reload)
 
-Bee has two parts: a **Go backend** and a **React frontend**. For development, we run them separately for hot-reloading.
-
-**Terminal 1: Go Backend (API)**
+**Terminal 1: Go Backend**
 ```bash
-# Run the backend server on port 1111
 go run . -port 1111
 ```
 
-**Terminal 2: React Frontend (UI)**
+**Terminal 2: React Frontend**
 ```bash
 cd frontend
-npm install  # Install dependencies (first time only)
-npm run dev  # Starts Vite dev server at http://localhost:5173
+npm install 
+npm run dev
 ```
+*Open `http://localhost:5173` for the frontend dev server.*
 
-👉 **Open `http://localhost:5173` to see your changes live!**
+### 3️⃣ Build for Production (Single Executable)
 
-### 3️⃣ Building the Application
-
-When you're ready to create a single executable file, you can cross-compile for different systems.
-
-**First, build the frontend:**
+First, build the frontend:
 ```bash
 cd frontend
-npm run build # Creates files in frontend/dist
+npm run build
 cd ..
 ```
 
-**Then, choose your platform (PowerShell):**
+Then, compile the binary for your platform (PowerShell):
 
 **🪟 Windows:**
 ```powershell
@@ -167,33 +155,20 @@ $env:GOOS="linux"; $env:GOARCH="amd64"; go build -o bee-linux
 $env:GOOS="darwin"; $env:GOARCH="arm64"; go build -o bee-mac
 ```
 
-> **Revert to default:**  
-> To switch back to your system's default OS targeting, run:
-> ```powershell
-> Remove-Item Env:\GOOS; Remove-Item Env:\GOARCH
-> ```
-
 ---
 
 ## 🤝 Contributing
 
-**We want your help to make Bee better!** 🐝
-
-1.  Look for open **[Issues](https://github.com/srsoumyax11/bee/issues)** (or open a new one!).
-2.  Fork the repo and create your branch: `git checkout -b my-new-feature`.
-3.  Commit your changes: `git commit -m 'Add some feature'`.
-4.  Push to the branch: `git push origin my-new-feature`.
-5.  Submit a **Pull Request**!
-
-**Happy Coding!** Let's build the best local sharing tool together. 💛
+1.  **Fork** the repo & create a branch (`git checkout -b feature/amazing-idea`).
+2.  **Commit** your changes (`git commit -m 'Add amazing idea'`).
+3.  **Push** to the branch (`git push origin feature/amazing-idea`).
+4.  **Open a Pull Request**!
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License**. Feel free to use, modify, and distribute it!
-
----
+This project is licensed under the **MIT License**.
 
 <div align="center">
   <p>Made with 💛 and Go</p>
