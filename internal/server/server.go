@@ -13,9 +13,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"time"
-
-	"justshare/internal/hub"
-
+	"Bee/internal/hub"
 	"github.com/gorilla/websocket"
 )
 

@@ -1,4 +1,4 @@
-module justshare
+module Bee
 
 go 1.25.6
 

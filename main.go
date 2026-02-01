@@ -1,13 +1,20 @@
 package main
 
 import (
+	"embed"
 	"flag"
+	"fmt"
+	"io/fs"
+	"log"
 	"net/http"
 
-	"justshare/internal/server"
+	"Bee/internal/server"
 )
 
+var version = "dev"
+
 func main() {
+	fmt.Printf("Bee version: %s\n", version)
 	port := flag.String("port", "8080", "Port to run the server on")
 	pin := flag.String("pin", "", "6-digit Access PIN (optional, generated if empty)")
 	flag.Parse()
@@ -22,4 +29,16 @@ func main() {
 	// Set embedded frontend filesystem
 	srv.FrontendFS = http.FS(GetFrontendFS())
 	srv.Start()
+}
+
+//go:embed frontend/dist
+var frontendFS embed.FS
+
+// GetFrontendFS returns the embedded frontend filesystem
+func GetFrontendFS() fs.FS {
+	frontendSubFS, err := fs.Sub(frontendFS, "frontend/dist")
+	if err != nil {
+		log.Fatal("Failed to load embedded frontend:", err)
+	}
+	return frontendSubFS
 }
