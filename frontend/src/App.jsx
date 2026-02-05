@@ -8,6 +8,9 @@ function App() {
   const [onlineUsers, setOnlineUsers] = useState([])
   const [ws, setWs] = useState(null)
   const [connectionStatus, setConnectionStatus] = useState('disconnected')
+  const reconnectAttempt = useRef(0)
+  const reconnectTimeout = useRef(null)
+  const userCredentials = useRef(null)
 
   const [isDragging, setIsDragging] = useState(false);
   const [files, setFiles] = useState([]);
@@ -61,6 +64,8 @@ function App() {
   }, []);
 
   const handleLogin = (name, pin) => {
+    userCredentials.current = { name, pin };
+    reconnectAttempt.current = 0;
     setConnectionStatus('connecting');
     connectWebSocket(name, pin);
   };
@@ -124,6 +129,12 @@ function App() {
   };
 
   const connectWebSocket = (name, pin) => {
+    // Clear any pending reconnection timeout
+    if (reconnectTimeout.current) {
+      clearTimeout(reconnectTimeout.current);
+      reconnectTimeout.current = null;
+    }
+
     const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
     const host = window.location.host;
     const device = getDeviceType();
@@ -141,6 +152,7 @@ function App() {
       setUser({ name, pin });
       setConnectionStatus('connected');
       setWs(socket);
+      reconnectAttempt.current = 0; // Reset on successful connection
     };
 
     socket.onmessage = (event) => {
@@ -158,18 +170,26 @@ function App() {
 
     socket.onclose = (event) => {
       console.log('Disconnected from WebSocket');
-      setConnectionStatus('disconnected');
       setWs(null);
-      if (!event.wasClean) {
-        setConnectionStatus('error');
-        setUser(null);
+
+      // Attempt to reconnect if we have credentials
+      if (userCredentials.current) {
+        setConnectionStatus('reconnecting');
+        const delay = Math.min(30000, Math.pow(2, reconnectAttempt.current) * 1000);
+        console.log(`Reconnecting in ${delay / 1000}s (attempt ${reconnectAttempt.current + 1})`);
+
+        reconnectTimeout.current = setTimeout(() => {
+          reconnectAttempt.current++;
+          connectWebSocket(userCredentials.current.name, userCredentials.current.pin);
+        }, delay);
+      } else {
+        setConnectionStatus('disconnected');
       }
     };
 
     socket.onerror = (err) => {
       console.error('WebSocket Error', err);
-      setConnectionStatus('error');
-      setUser(null);
+      // onclose will handle reconnection
     };
   };
 
@@ -404,7 +424,16 @@ function App() {
 
         {!sidebarCollapsed && (
           <div className="sidebar-footer">
-            PIN: {user.pin}
+            <div>PIN: {user.pin}</div>
+            <div className="connection-status">
+              <span className={`status-dot ${connectionStatus}`}></span>
+              <span className="status-text">
+                {connectionStatus === 'connected' && 'Connected'}
+                {connectionStatus === 'connecting' && 'Connecting...'}
+                {connectionStatus === 'reconnecting' && 'Reconnecting...'}
+                {connectionStatus === 'disconnected' && 'Disconnected'}
+              </span>
+            </div>
           </div>
         )}
       </aside>

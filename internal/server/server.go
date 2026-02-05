@@ -1,6 +1,7 @@
 package server
 
 import (
+	"Bee/internal/hub"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -13,7 +14,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"time"
-	"Bee/internal/hub"
+
 	"github.com/gorilla/websocket"
 )
 
@@ -31,6 +32,13 @@ func NewServer(port, pin string) *Server {
 		Pin:  pin,
 	}
 }
+
+const (
+	// WebSocket timeout constants
+	writeWait  = 10 * time.Second // Time allowed to write a message to the peer
+	pongWait   = 60 * time.Second // Time allowed to read the next pong message from the peer
+	pingPeriod = 30 * time.Second // Send pings to peer with this period (must be less than pongWait)
+)
 
 var upgrader = websocket.Upgrader{
 	CheckOrigin: func(r *http.Request) bool {
@@ -91,25 +99,59 @@ func (s *Server) Start() {
 		})
 		client.Send <- msg
 
+		// Configure ping/pong handler
+		conn.SetReadDeadline(time.Now().Add(pongWait))
+		conn.SetPongHandler(func(string) error {
+			conn.SetReadDeadline(time.Now().Add(pongWait))
+			return nil
+		})
+
+		// Ticker for sending periodic pings
+		ticker := time.NewTicker(pingPeriod)
+
 		// Handle incoming messages
 		go func() {
 			defer func() {
+				ticker.Stop()
 				s.Hub.Unregister <- client
 				conn.Close()
 			}()
 			for {
 				_, _, err := conn.ReadMessage()
 				if err != nil {
+					if websocket.IsUnexpectedCloseError(err, websocket.CloseGoingAway, websocket.CloseAbnormalClosure) {
+						log.Printf("WebSocket error: %v", err)
+					}
 					break
 				}
 				// For now, just ignore echo or handle specific logic
 			}
 		}()
 
-		// Handle outgoing messages
+		// Handle outgoing messages and pings
 		go func() {
-			for message := range client.Send {
-				conn.WriteMessage(websocket.TextMessage, message)
+			defer func() {
+				ticker.Stop()
+				conn.Close()
+			}()
+			for {
+				select {
+				case message, ok := <-client.Send:
+					conn.SetWriteDeadline(time.Now().Add(writeWait))
+					if !ok {
+						// Hub closed the channel
+						conn.WriteMessage(websocket.CloseMessage, []byte{})
+						return
+					}
+					if err := conn.WriteMessage(websocket.TextMessage, message); err != nil {
+						return
+					}
+				case <-ticker.C:
+					conn.SetWriteDeadline(time.Now().Add(writeWait))
+					if err := conn.WriteMessage(websocket.PingMessage, nil); err != nil {
+						return
+					}
+				}
 			}
 		}()
 	})
